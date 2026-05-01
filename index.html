@@ -2,72 +2,21 @@
 <html>
 <head>
   <title>Task Manager</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    h2 {
-      color: #333;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      margin: 20px auto;
-      width: 300px;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    }
-
-    input {
-      padding: 10px;
-      margin: 8px;
-      width: 250px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #45a049;
-    }
-  </style>
 </head>
-
 <body>
+  <h2>Login</h2>
+  <input id="email" placeholder="Email"><br><br>
+  <input id="password" type="password" placeholder="Password"><br><br>
+  <button onclick="login()">Login</button>
 
-  <div class="card">
-    <h2>Login</h2>
-    <input id="email" placeholder="Email"><br>
-    <input id="password" type="password" placeholder="Password"><br>
-    <button onclick="login()">Login</button>
-  </div>
+  <h2>Create Project</h2>
+  <input id="pname" placeholder="Project Name"><br><br>
+  <button onclick="createProject()">Create Project</button>
 
-  <div class="card">
-    <h2>Create Project</h2>
-    <input id="pname" placeholder="Project Name"><br>
-    <button onclick="createProject()">Create Project</button>
-  </div>
-
-  <div class="card">
-    <h2>Create Task</h2>
-    <input id="tid" placeholder="Project ID"><br>
-    <input id="ttitle" placeholder="Task Title"><br>
-    <button onclick="createTask()">Create Task</button>
-  </div>
+  <h2>Create Task</h2>
+  <input id="tid" placeholder="Project ID"><br><br>
+  <input id="ttitle" placeholder="Task Title"><br><br>
+  <button onclick="createTask()">Create Task</button>
 
   <script>
     const BASE = "https://task-manager-backend-dcia.onrender.com";
@@ -82,7 +31,6 @@
           password: document.getElementById("password").value
         })
       });
-
       const data = await res.json();
       token = data.token;
       alert("Logged in!");
@@ -93,13 +41,12 @@
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token
+          "Authorization": token
         },
         body: JSON.stringify({
           name: document.getElementById("pname").value
         })
       });
-
       const data = await res.json();
       alert("Project Created: " + data._id);
     }
@@ -109,18 +56,16 @@
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token
+          "Authorization": token
         },
         body: JSON.stringify({
           title: document.getElementById("ttitle").value,
           projectId: document.getElementById("tid").value
         })
       });
-
       const data = await res.json();
       alert("Task Created: " + data._id);
     }
   </script>
-
 </body>
 </html>
